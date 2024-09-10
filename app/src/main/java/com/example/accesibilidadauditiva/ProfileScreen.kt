@@ -25,8 +25,8 @@ fun ProfileScreen() {
         )
 
         OutlinedTextField(
-            value = "Nombre de Usuario", // Aquí podrías mostrar el nombre del usuario actual
-            onValueChange = { /* Implementa la lógica para actualizar el nombre */ },
+            value = "Nombre de Usuario", // Aquí se mostrará el nombre del usuario actual
+            onValueChange = { /* Actualizar el nombre */ },
             label = { Text("Nombre Completo") },
             modifier = Modifier
                 .fillMaxWidth()
@@ -34,8 +34,8 @@ fun ProfileScreen() {
         )
 
         OutlinedTextField(
-            value = "Correo Electrónico", // Aquí podrías mostrar el correo del usuario actual
-            onValueChange = { /* Implementa la lógica para actualizar el correo */ },
+            value = "Correo Electrónico", // Aquí se mostrará el correo del usuario actual
+            onValueChange = { /* Actualizar el correo */ },
             label = { Text("Correo Electrónico") },
             modifier = Modifier
                 .fillMaxWidth()

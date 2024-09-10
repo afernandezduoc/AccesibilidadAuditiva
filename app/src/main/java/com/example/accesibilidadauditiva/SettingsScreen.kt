@@ -34,7 +34,7 @@ fun SettingsScreen() {
             Spacer(modifier = Modifier.weight(1f))
             Switch(
                 checked = true, // Estado inicial del interruptor
-                onCheckedChange = { /* Implementa la lógica para cambiar el estado */ }
+                onCheckedChange = { /* Cambiar el estado */ }
             )
         }
 
@@ -48,12 +48,12 @@ fun SettingsScreen() {
             Spacer(modifier = Modifier.weight(1f))
             Switch(
                 checked = false, // Estado inicial del interruptor
-                onCheckedChange = { /* Implementa la lógica para cambiar el tema */ }
+                onCheckedChange = { /* Cambiar el tema */ }
             )
         }
 
         Button(
-            onClick = { /* Implementa la lógica para cerrar sesión */ },
+            onClick = { /* Cerrar sesión */ },
             modifier = Modifier.padding(top = 16.dp)
         ) {
             Text("Cerrar Sesión")
