@@ -3,16 +3,17 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.accesibilidadauditiva.autenticarUsuario
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.example.accesibilidadauditiva.usuariosRegistrados
 
 @Composable
-fun LoginScreen(navController: NavHostController) {
+fun LoginScreen(navController: NavHostController, onLoginSuccess: () -> Unit) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var mensajeError by remember { mutableStateOf<String?>(null) }
@@ -53,6 +54,7 @@ fun LoginScreen(navController: NavHostController) {
             onClick = {
                 if (autenticarUsuario(email, password)) {
                     mensajeError = null
+                    onLoginSuccess()
                     navController.navigate("home") // Navega a la HomeScreen
                 } else {
                     mensajeError = "Credenciales incorrectas"
@@ -84,13 +86,18 @@ fun LoginScreen(navController: NavHostController) {
         ) {
             Text("¿No tienes cuenta? Regístrate")
         }
-
     }
 }
+
+fun autenticarUsuario(email: String, password: String): Boolean {
+    return usuariosRegistrados.any { it.email == email && it.password == password }
+}
+
 
 @Preview(showBackground = true)
 @Composable
 fun LoginScreenPreview() {
-    val navController = rememberNavController()
-    LoginScreen(navController)
+    // Se crea un controlador de navegación falso para la vista previa
+    val navController = NavHostController(LocalContext.current)
+    LoginScreen(navController = navController, onLoginSuccess = {})
 }
