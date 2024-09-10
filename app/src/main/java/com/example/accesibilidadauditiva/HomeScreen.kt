@@ -19,7 +19,7 @@ fun HomeScreen() {
         verticalArrangement = Arrangement.Center
     ) {
         Text(
-            text = "¡Bienvenido a la Home Screen!",
+            text = "¡Bienvenido!",
             style = MaterialTheme.typography.headlineMedium,
             modifier = Modifier.padding(bottom = 32.dp)
         )

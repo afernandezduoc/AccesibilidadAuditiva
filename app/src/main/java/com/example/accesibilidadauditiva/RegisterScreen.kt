@@ -75,7 +75,7 @@ fun RegisterScreen(navController: NavHostController) {
                     usuariosRegistrados += nuevoUsuario
                     mensajeError = null
                     mensajeExito = "Usuario registrado con éxito"
-                    // Navegar de vuelta a la pantalla de login si se desea
+                    // Navegar de vuelta a la pantalla de login
                     // navController.navigate("login")
                 }
             },
