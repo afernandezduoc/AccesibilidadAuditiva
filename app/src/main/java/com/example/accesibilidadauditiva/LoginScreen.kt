@@ -1,3 +1,4 @@
+import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -10,13 +11,15 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.example.accesibilidadauditiva.usuariosRegistrados
+import com.google.firebase.auth.FirebaseAuth
 
 @Composable
 fun LoginScreen(navController: NavHostController, onLoginSuccess: () -> Unit) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var mensajeError by remember { mutableStateOf<String?>(null) }
+    val context = LocalContext.current // Obtener el contexto para mostrar Toasts
+    val auth = FirebaseAuth.getInstance() // Instancia de FirebaseAuth
 
     Column(
         modifier = Modifier
@@ -52,12 +55,22 @@ fun LoginScreen(navController: NavHostController, onLoginSuccess: () -> Unit) {
 
         Button(
             onClick = {
-                if (autenticarUsuario(email, password)) {
-                    mensajeError = null
-                    onLoginSuccess()
-                    navController.navigate("home") // Navega a la HomeScreen
+                if (email.isNotEmpty() && password.isNotEmpty()) {
+                    auth.signInWithEmailAndPassword(email, password)
+                        .addOnCompleteListener { task ->
+                            if (task.isSuccessful) {
+                                // Usuario autenticado
+                                mensajeError = null
+                                Toast.makeText(context, "Inicio de sesión exitoso", Toast.LENGTH_SHORT).show()
+                                onLoginSuccess()
+                                navController.navigate("home") // Navega a la HomeScreen
+                            } else {
+                                // Error en la autenticación
+                                mensajeError = "Error en la autenticación: ${task.exception?.message}"
+                            }
+                        }
                 } else {
-                    mensajeError = "Credenciales incorrectas"
+                    mensajeError = "Por favor ingresa tu correo y contraseña"
                 }
             },
             modifier = Modifier
@@ -88,11 +101,6 @@ fun LoginScreen(navController: NavHostController, onLoginSuccess: () -> Unit) {
         }
     }
 }
-
-fun autenticarUsuario(email: String, password: String): Boolean {
-    return usuariosRegistrados.any { it.email == email && it.password == password }
-}
-
 
 @Preview(showBackground = true)
 @Composable

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "66175254855",
+    "project_id": "accesibilidadauditiva",
+    "storage_bucket": "accesibilidadauditiva.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:66175254855:android:f1118d1333e7c46a418c62",
+        "android_client_info": {
+          "package_name": "com.example.accesibilidadauditiva"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAYZujp5RetSu2CT7v7ObDOUiy53tTVDwQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
