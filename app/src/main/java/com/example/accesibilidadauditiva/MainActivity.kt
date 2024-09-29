@@ -58,7 +58,7 @@ fun MainScreen(navController: NavHostController, isAuthenticated: Boolean, onLog
             composable("login") {
                 LoginScreen(navController, onLoginSuccess) // Pasar la función para actualizar el estado de autenticación
             }
-            composable("home") { HomeScreen() }
+            composable("home") { HomeScreen(navController) }
             composable("register") { RegisterScreen(navController) }
             composable("recovery") { PasswordRecoveryScreen(navController) }
             composable("profile") { ProfileScreen() }
