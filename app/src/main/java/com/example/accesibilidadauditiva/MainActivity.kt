@@ -62,7 +62,7 @@ fun MainScreen(navController: NavHostController, isAuthenticated: Boolean, onLog
             composable("register") { RegisterScreen(navController) }
             composable("recovery") { PasswordRecoveryScreen(navController) }
             composable("profile") { ProfileScreen() }
-            composable("settings") { SettingsScreen() }
+            composable("settings") { SettingsScreen(navController) }
         }
     }
 }
