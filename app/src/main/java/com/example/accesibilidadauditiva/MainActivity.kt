@@ -64,6 +64,7 @@ fun MainScreen(navController: NavHostController, isAuthenticated: Boolean, onLog
             composable("profile") { ProfileScreen() }
             composable("settings") { SettingsScreen(navController) }
             composable("escribir") { EscribirScreen(navController) }
+            composable("hablar") { HablarScreen(navController) }
         }
     }
 }
