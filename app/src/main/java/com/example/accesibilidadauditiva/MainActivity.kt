@@ -15,6 +15,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.accesibilidadauditiva.ui.*
 import com.example.accesibilidadauditiva.ui.theme.AccesibilidadAuditivaTheme
+import com.example.accesibilidadauditiva.BuscarDispositivoScreen
+
 
 class MainActivity : ComponentActivity() {
     private lateinit var userPreferences: UserPreferences
@@ -65,6 +67,7 @@ fun MainScreen(navController: NavHostController, isAuthenticated: Boolean, onLog
             composable("settings") { SettingsScreen(navController) }
             composable("escribir") { EscribirScreen(navController) }
             composable("hablar") { HablarScreen(navController) }
+            composable("buscarDispositivo") { BuscarDispositivoScreen(navController) }
         }
     }
 }
