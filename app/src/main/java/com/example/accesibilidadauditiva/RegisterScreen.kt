@@ -1,26 +1,28 @@
 package com.example.accesibilidadauditiva
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.accesibilidadauditiva.Usuario
-import com.example.accesibilidadauditiva.usuariosRegistrados
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.google.firebase.auth.FirebaseAuth
 
 @Composable
 fun RegisterScreen(navController: NavHostController) {
-    var nombre by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var mensajeError by remember { mutableStateOf<String?>(null) }
     var mensajeExito by remember { mutableStateOf<String?>(null) }
+    val context = LocalContext.current // Contexto para mostrar Toast
+    val auth = FirebaseAuth.getInstance() // Instancia de FirebaseAuth
 
     Column(
         modifier = Modifier
@@ -33,15 +35,6 @@ fun RegisterScreen(navController: NavHostController) {
             text = "Registrar Usuario",
             style = MaterialTheme.typography.headlineMedium,
             modifier = Modifier.padding(bottom = 32.dp)
-        )
-
-        OutlinedTextField(
-            value = nombre,
-            onValueChange = { nombre = it },
-            label = { Text("Nombre Completo") },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 16.dp)
         )
 
         OutlinedTextField(
@@ -65,18 +58,24 @@ fun RegisterScreen(navController: NavHostController) {
 
         Button(
             onClick = {
-                // Verificar si el correo ya está registrado
-                if (usuariosRegistrados.any { it.email == email }) {
-                    mensajeError = "El correo ya está registrado"
-                    mensajeExito = null
+                if (email.isNotEmpty() && password.isNotEmpty()) {
+                    // Llamada a Firebase para registrar al usuario
+                    auth.createUserWithEmailAndPassword(email, password)
+                        .addOnCompleteListener { task ->
+                            if (task.isSuccessful) {
+                                // Registro exitoso
+                                mensajeExito = "Usuario registrado con éxito"
+                                mensajeError = null
+                                Toast.makeText(context, "Registro exitoso", Toast.LENGTH_SHORT).show()
+                                navController.navigate("login") // Navega a la pantalla de login
+                            } else {
+                                // Error en el registro
+                                mensajeError = "Error en el registro: ${task.exception?.message}"
+                                mensajeExito = null
+                            }
+                        }
                 } else {
-                    // Registrar al nuevo usuario
-                    val nuevoUsuario = Usuario(email, password)
-                    usuariosRegistrados += nuevoUsuario
-                    mensajeError = null
-                    mensajeExito = "Usuario registrado con éxito"
-                    // Navegar de vuelta a la pantalla de login
-                    // navController.navigate("login")
+                    mensajeError = "Por favor completa todos los campos"
                 }
             },
             modifier = Modifier
